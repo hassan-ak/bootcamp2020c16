@@ -1,27 +1,28 @@
 import React from 'react';
 
-const question = "What is the name of 6-year-old boy who becomes world’s youngest computer programmer?";
-const answers = [
-    "Muhammad Hamza Shahzad",
-    "Tanmay Bakshi",
-    "Arham Om Talsania",
-    "None of these",
-]
+type Props = {
+    question: string;
+    answers: string[];
+    callback: any;
+    userAnswer: any;
+    questionNum: number;
+    totalQuestions: number;
+}
 
 
-export const QuestionsCard = () => {
+export const QuestionsCard: React.FC<Props> = ({ question, answers, callback, userAnswer, questionNum, totalQuestions}) =>{
     return (
         <div className="cardContainer">
             <p>
                 <strong>
-                    Question: {1} / {10}
+                    Question: {questionNum} / {totalQuestions}
                 </strong>
             </p>
             <p dangerouslySetInnerHTML={{ __html: question}} className="question"/>
             <div>
                 {answers.map((answer,i) => (
                     <div className="answers" key={i}>
-                        <button>
+                        <button disabled={userAnswer} onClick={callback}>
                             <span dangerouslySetInnerHTML={{ __html: answer }} />
                         </button>
                     </div>

@@ -8,12 +8,20 @@ import { QuestionsCard } from './components/QuestionsCard';
 import { Next } from './components/Next';
 import Footer from './components/Footer';
 import { Api } from './functionalComponent/Api';
+import { QuestionState } from './functionalComponent/Data';
+
+type AnswerObject = {
+  question: string;
+  answer: string;
+  correct: boolean;
+  correctAnswer: string;
+}
 
 function App() {
 
-  const [selectedNumberOfQuestions, setSelectedNumberOfQuestions] = useState(0)
+  const [selectedNumberOfQuestions, setSelectedNumberOfQuestions] = useState(10)
   async function numberOfQuestions(value:number) {
-    setSelectedNumberOfQuestions(value)
+    setSelectedNumberOfQuestions(value) 
   }
 
   const [selectedCategory, setSelectedCategory] = useState(0)
@@ -26,6 +34,42 @@ function App() {
     setSelectedDifficulty(value)
   }
 
+  const [loading, setLoading] = useState(false);
+  async function checkLoading(value:boolean) {
+    setLoading(value)
+  }
+
+  const [number, setNumber] = useState(0);
+  async function checkNumber(value:number) {
+    setNumber(value)
+  }
+
+  const [questions, setQuestions] = useState<QuestionState[]>([]);
+  async function checkQuestions(value:QuestionState[]) {
+    setQuestions(value)
+  }
+
+  const [userAnswers, setUserAnswers] = useState<AnswerObject[]>([]);
+  async function checkUserAnswers(value:AnswerObject[]) {
+    setUserAnswers(value)
+  }
+
+  const [score, setScore] = useState(0);
+  async function checkScore(value:number) {
+    setScore(value)
+  }
+
+  const [gameOver, setGameOver] = useState(true);
+  async function checkGameOver(value:boolean) {
+    setGameOver(value)
+  }
+
+  const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!gameOver) {
+      const answer = e.currentTarget.value;
+    }
+  };
+
   return (
     <div className="container">
       <Api
@@ -34,14 +78,36 @@ function App() {
         difficulty={selectedDifficulty}
       >
         <Title/>
-        <StartQuiz 
-          recieveNumberOfQuestions={numberOfQuestions}
-          recieveCategory={category}
-          recieveDifficulty={difficulty}
-        />
-        <Loading/>
-        <Score/>
-        <QuestionsCard/>
+        {gameOver || userAnswers.length === selectedNumberOfQuestions ? (
+          <StartQuiz 
+            recieveNumberOfQuestions={numberOfQuestions}
+            recieveCategory={category}
+            recieveDifficulty={difficulty}
+            recieveCheckLoading={checkLoading}
+            recieveCheckNumber={checkNumber}
+            recieveCheckQuestions={checkQuestions}
+            recieveCheckUserAnswers={checkUserAnswers}
+            recieveCheckScore={checkScore}
+            recieveCheckGameOver={checkGameOver}
+          />): null }
+        
+
+
+        {loading ? (<Loading/>) : null }
+
+        {!gameOver ? (<Score/>) : null }
+
+
+
+        {!loading && !gameOver ? (
+          <QuestionsCard
+            questionNum={number + 1}
+            totalQuestions={selectedNumberOfQuestions}
+            question={questions[number].question}
+            answers={questions[number].answers}
+            userAnswer={userAnswers ? userAnswers[number] : undefined }
+            callback={checkAnswer}
+          />) : null }
         <Next/>
         <Footer/>
       </Api>
