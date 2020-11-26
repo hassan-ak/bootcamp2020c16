@@ -31,28 +31,33 @@ const category = [
   { value: 28, label: 'Vehicles',},
 ];
 const difficulty = [
-  { value: 0, label: 'Any Difficulty',},
+  { value: "", label: 'Any Difficulty',},
   { value: "easy", label: 'Easy',},
   { value: "medium", label: 'Medium',},
   { value: "hard", label: 'Hard',},
 ];
+type Props = {
+  recieveNumberOfQuestions: any;
+  recieveCategory: any;
+  recieveDifficulty: any;
+}
 
-export const StartQuiz = () => {
+export const StartQuiz : React.FC<Props> = ({ recieveNumberOfQuestions, recieveCategory,recieveDifficulty}) => {
   return (
     <div className="selectionContainer">
       <div>
         <FormControl variant="outlined" className="formControl">
           <InputLabel htmlFor="numberOfQuestions">Number of Questions</InputLabel>
-          <Select native label="Number of Questions">
-            <option aria-label="None" value="" />
-            {noOfQuestions.map((option) => (<option key={option} value={option}>{option}</option>))}
+          <Select native label="Number of Questions" onChange={(e)=>recieveNumberOfQuestions(Number(e.target.value))}>
+            <option aria-label="None" value=""/>
+            {noOfQuestions.map((option) => (<option key={option} value={+option}>{option}</option>))}
           </Select>
         </FormControl>
       </div>
       <div>
         <FormControl variant="outlined" className="formControl">
           <InputLabel htmlFor="category">Category</InputLabel>
-          <Select native label="Category">
+          <Select native label="Category" onChange={(e)=>recieveCategory(Number(e.target.value))}>
             <option aria-label="None" value="" />
             {category.map((option) => (<option key={option.value} value={option.value}>{option.label}</option>))}
           </Select>
@@ -61,7 +66,7 @@ export const StartQuiz = () => {
       <div>
         <FormControl variant="outlined" className="formControl">
           <InputLabel htmlFor="difficulty">Difficulty</InputLabel>
-          <Select native label="Difficulty">
+          <Select native label="Difficulty" onChange={(e)=>recieveDifficulty(e.target.value)}>
             <option aria-label="None" value="" />
             {difficulty.map((option) => (<option key={option.value} value={option.value}>{option.label}</option>))}
           </Select>
