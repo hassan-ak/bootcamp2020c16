@@ -19,8 +19,8 @@ export const QuestionsCard = () => {
             </p>
             <p dangerouslySetInnerHTML={{ __html: question}} className="question"/>
             <div>
-                {answers.map(answer => (
-                    <div className="answers">
+                {answers.map((answer,i) => (
+                    <div className="answers" key={i}>
                         <button>
                             <span dangerouslySetInnerHTML={{ __html: answer }} />
                         </button>

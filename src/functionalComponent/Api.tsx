@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import ApiContext from './ApiContext';
 
 type Props = {
     numberOfQuestions: number;
@@ -7,9 +7,7 @@ type Props = {
     difficulty: string;
   }
 
-
-
-export const Api : React.FC<Props> = ({ numberOfQuestions, category,difficulty}) => {
+export const Api : React.FC<Props> = ({ children, numberOfQuestions, category,difficulty}) => {
     const [url, setUrl] = useState('https://opentdb.com/api.php?amount=10&type=multiple');
 
     useEffect(() => {
@@ -27,20 +25,16 @@ export const Api : React.FC<Props> = ({ numberOfQuestions, category,difficulty})
             setUrl(`https://opentdb.com/api.php?amount=${numberOfQuestions}&difficulty=${difficulty}&type=multiple`)
         }else if(numberOfQuestions !== 0 && category !== 0 && difficulty===""){
             setUrl(`https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${category}&type=multiple`)
-        }else if(numberOfQuestions !== 0 && category !== 0 && difficulty!==""){
+        }else{
             setUrl(`https://opentdb.com/api.php?amount=${numberOfQuestions}&category=${category}&difficulty=${difficulty}&type=multiple`)
         }
-        async function fetchAllData() {
-            const response = await fetch(url);
-            const data = await response.json();
-            console.log(data)
-        }
-    fetchAllData();
     }, [numberOfQuestions, category,difficulty,url])
 
     
     return (
-        <div>
-        </div>
-    )
-}
+        <ApiContext.Provider
+            value = {{ url,
+                      }}>
+                {children}
+        </ApiContext.Provider>
+    )}

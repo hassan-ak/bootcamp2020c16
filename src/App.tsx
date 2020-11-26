@@ -9,7 +9,6 @@ import { Next } from './components/Next';
 import Footer from './components/Footer';
 import { Api } from './functionalComponent/Api';
 
-
 function App() {
 
   const [selectedNumberOfQuestions, setSelectedNumberOfQuestions] = useState(0)
@@ -29,22 +28,23 @@ function App() {
 
   return (
     <div className="container">
-      <Title/>
-      <StartQuiz 
-        recieveNumberOfQuestions={numberOfQuestions}
-        recieveCategory={category}
-        recieveDifficulty={difficulty}
-      />
-      <Loading/>
-      <Score/>
-      <QuestionsCard/>
-      <Next/>
-      <Footer/>
       <Api
         numberOfQuestions={selectedNumberOfQuestions}
         category={selectedCategory}
         difficulty={selectedDifficulty}
-      ></Api>
+      >
+        <Title/>
+        <StartQuiz 
+          recieveNumberOfQuestions={numberOfQuestions}
+          recieveCategory={category}
+          recieveDifficulty={difficulty}
+        />
+        <Loading/>
+        <Score/>
+        <QuestionsCard/>
+        <Next/>
+        <Footer/>
+      </Api>
     </div>
   );
 }
