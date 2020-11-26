@@ -74,7 +74,6 @@ h2{
 }
 
 .answers button{
-    background-color: grey;
     width: 500px;
     padding: 10px;
     border-radius: 30px;
@@ -86,7 +85,6 @@ h2{
 }
 
 .answers button span{
-    color: white;
     font-size: medium;
 }
 
@@ -105,16 +103,16 @@ h2{
     width: 100px;
     padding: 10px;
     border-radius: 10px;
-    color: white;
+    color: black;
     font-size: medium;
 }
 
 .next button{
-    background-color: orangered;
+    background-image: linear-gradient(90deg, rgba(255, 255, 0, 0.664), rgb(255, 211, 15), rgba(255, 255, 0, 0.664));
 }
 
 .playAgain button{
-    background-color: greenyellow;
+   background-image: linear-gradient(90deg, rgb(132, 175, 240), rgb(0, 247, 255));
 }
 
 .playAgain button:hover,.next button:hover{

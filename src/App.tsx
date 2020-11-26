@@ -55,8 +55,6 @@ function App() {
     setUserAnswers(value)
   }
 
-  console.log("anser :", userAnswers)
-
   const [score, setScore] = useState(0);
   async function checkScore(value:number) {
     setScore(value)

@@ -1,4 +1,5 @@
 import React , {useContext} from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { Button, FormControl, InputLabel, Select } from '@material-ui/core';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import { fetchQuestions } from '../functionalComponent/Data';
@@ -50,6 +51,12 @@ type Props = {
   recieveCheckGameOver: any;
 }
 
+const useStyles = makeStyles((theme) => ({
+  startButton: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  }
+}));
+
 
 export const StartQuiz : React.FC<Props> = ({ 
                                               recieveNumberOfQuestions, 
@@ -66,6 +73,8 @@ export const StartQuiz : React.FC<Props> = ({
   const context = useContext(ApiContext);
   const contextValues = Object.values(context);
   const url:any = contextValues[0];
+
+  const classes = useStyles();
 
   const startQuiz = async() => {
     recieveCheckLoading(true);
@@ -118,7 +127,7 @@ export const StartQuiz : React.FC<Props> = ({
       <div>
         <Button
           variant="contained"
-          color="default"
+          className={classes.startButton}
           onClick={startQuiz}
           endIcon={<KeyboardArrowRightIcon />}
         >
