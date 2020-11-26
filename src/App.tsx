@@ -9,6 +9,7 @@ import { Next } from './components/Next';
 import Footer from './components/Footer';
 import { Api } from './functionalComponent/Api';
 import { QuestionState } from './functionalComponent/Data';
+import { PlayAgain } from './components/PlayAgin';
 
 type AnswerObject = {
   question: string;
@@ -54,6 +55,8 @@ function App() {
     setUserAnswers(value)
   }
 
+  console.log("anser :", userAnswers)
+
   const [score, setScore] = useState(0);
   async function checkScore(value:number) {
     setScore(value)
@@ -67,9 +70,26 @@ function App() {
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!gameOver) {
       const answer = e.currentTarget.value;
+      const correct = questions[number].correct_answer === answer;
+      if (correct) setScore(prev => prev + 1)
+      const answerObject = {
+        question: questions[number].question,
+        answer,
+        correct,
+        correctAnswer: questions[number].correct_answer
+      }
+      setUserAnswers(prev => [...prev, answerObject])
     }
   };
 
+  const nextQuestion = async() => {
+      setNumber(number + 1);
+    };
+  
+  const playagin = async()=>{
+    setGameOver(true);
+  }
+  
   return (
     <div className="container">
       <Api
@@ -78,7 +98,7 @@ function App() {
         difficulty={selectedDifficulty}
       >
         <Title/>
-        {gameOver || userAnswers.length === selectedNumberOfQuestions ? (
+        {gameOver ? (
           <StartQuiz 
             recieveNumberOfQuestions={numberOfQuestions}
             recieveCategory={category}
@@ -95,9 +115,7 @@ function App() {
 
         {loading ? (<Loading/>) : null }
 
-        {!gameOver ? (<Score/>) : null }
-
-
+        {!gameOver && !loading ? (<Score setScore={score}/>) : null }
 
         {!loading && !gameOver ? (
           <QuestionsCard
@@ -108,8 +126,17 @@ function App() {
             userAnswer={userAnswers ? userAnswers[number] : undefined }
             callback={checkAnswer}
           />) : null }
-        <Next/>
-        <Footer/>
+
+
+        {!gameOver && !loading && userAnswers.length === number + 1 && number !== selectedNumberOfQuestions - 1 ? (
+          <Next callback={nextQuestion}/>
+        ): null }
+
+        { userAnswers.length === number + 1 && number === selectedNumberOfQuestions - 1 && !gameOver && !loading?  (
+          <PlayAgain callback={playagin}/>
+        ): null }
+
+        { !loading?(<Footer/>):null}
       </Api>
     </div>
   );

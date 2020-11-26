@@ -4,11 +4,11 @@ type Props = {
     callback: any;
 }
 
-export const Next : React.FC<Props> = ({callback}) => {
+export const PlayAgain : React.FC<Props> = ({callback}) => {
     return (
-        <div className='next'>
+        <div className='playAgain'>
             <button onClick={callback}>
-                Next
+                Play Again
             </button>
         </div>
     )

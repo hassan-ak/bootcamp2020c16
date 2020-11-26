@@ -94,27 +94,34 @@ h2{
     outline: 0;
 }
 
-.next{
+.next, .playAgain{
     margin-top: 20px;
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
 }
 
-.next button{
+.playAgain button,.next button{
     width: 100px;
     padding: 10px;
     border-radius: 10px;
-    background-color: orangered;
     color: white;
     font-size: medium;
 }
 
-.next button:hover{
+.next button{
+    background-color: orangered;
+}
+
+.playAgain button{
+    background-color: greenyellow;
+}
+
+.playAgain button:hover,.next button:hover{
     cursor: pointer;
 }
 
-.next :focus{
+.playAgain button:hover,.next :focus{
     outline: 0;
 }
 

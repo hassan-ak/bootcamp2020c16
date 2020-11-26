@@ -22,7 +22,7 @@ export const QuestionsCard: React.FC<Props> = ({ question, answers, callback, us
             <div>
                 {answers.map((answer,i) => (
                     <div className="answers" key={i}>
-                        <button disabled={userAnswer} onClick={callback}>
+                        <button value={answer} disabled={userAnswer} onClick={callback}>
                             <span dangerouslySetInnerHTML={{ __html: answer }} />
                         </button>
                     </div>

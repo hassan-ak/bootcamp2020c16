@@ -1,9 +1,13 @@
 import React from 'react'
 
-export const Score = () => {
+type Props = {
+    setScore: number;
+}
+
+export const Score: React.FC<Props> = ({setScore}) => {
     return (
         <div>
-            <h2>Score :</h2>
+            <h2>Score: {setScore}</h2>
         </div>
     )
 }
